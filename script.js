@@ -85,6 +85,15 @@ const shoeSizes = ["40", "41", "42", "43", "44"];
 const colors = ["Черно", "Бяло", "Сиво"];
 
 let selectedCategory = "Всички";
+
+function eur(price) {
+  return (price / 1.95583).toFixed(2);
+}
+
+function formatPrice(price) {
+  return `${price} лв / €${eur(price)}`;
+}
+
 let searchQuery = "";
 let activeProduct = products[1];
 let selectedSize = "42";
@@ -183,7 +192,7 @@ function renderProducts() {
         <div class="product-meta"><span>${product.category}</span><span>${product.rating.toFixed(1)} (${product.reviews})</span></div>
         <div class="product-title-row">
           <h4>${product.name}</h4>
-          <div class="price-box"><strong>${product.price} лв</strong><span>${product.oldPrice} лв</span></div>
+          <div class="price-box"><strong>${formatPrice(product.price)}</strong><span>${product.oldPrice} лв</span></div>
         </div>
         <p class="product-desc-sm">${product.description}</p>
         <div class="product-actions">
@@ -220,7 +229,7 @@ function renderProducts() {
 
 function renderActiveProduct() {
   els.activeName.textContent = activeProduct.name;
-  els.activePrice.textContent = `${activeProduct.price} лв`;
+  els.activePrice.textContent = formatPrice(activeProduct.price);
   els.activeRating.textContent = activeProduct.rating.toFixed(1);
   els.activeReviews.textContent = activeProduct.reviews;
   els.activeDescription.textContent = activeProduct.longDescription;
@@ -289,7 +298,7 @@ function renderCart() {
           <div><strong>${item.name}</strong></div>
           <div class="cart-sub">Размер: ${item.size} · Цвят: ${item.color}</div>
         </div>
-        <div><strong>${item.price * item.qty} лв</strong></div>
+        <div><strong>${formatPrice(item.price * item.qty)}</strong></div>
       </div>
       <div class="cart-controls">
         <button>-</button>
@@ -340,7 +349,7 @@ function placeOrder() {
   els.successBox.classList.remove("hidden");
   els.successBox.innerHTML = `
     <strong>Поръчката е приета</strong>
-    <p style="margin-top:8px;color:rgba(255,255,255,.62)">Номер: ${orderId}<br>Метод: Наложен платеж<br>Общо: ${total} лв<br>Ще се свържем с вас за потвърждение.</p>
+    <p style="margin-top:8px;color:rgba(255,255,255,.62)">Номер: ${orderId}<br>Метод: Наложен платеж<br>Общо: ${formatPrice(total)}<br>Ще се свържем с вас за потвърждение.</p>
   `;
 
   cart = [];
