@@ -6,7 +6,7 @@
 --card: #111118;
   --soft: rgba(255,255,255,.06);
   --border: rgba(255,255,255,.1);
-  --muted: rgba(255,255,255,.62);
+ --muted: #ffffff;
   --white: #fff;
   --black: #000;
 }
