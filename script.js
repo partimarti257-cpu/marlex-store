@@ -143,9 +143,7 @@ function filteredProducts() {
   return products.filter((product) => {
     const matchesCategory = selectedCategory === "Всички" || product.category === selectedCategory;
     const q = searchQuery.toLowerCase();
-    const matchesSearch =
-      product.name.toLowerCase().includes(q) ||
-      product.description.toLowerCase().includes(q);
+    const matchesSearch = product.name.toLowerCase().includes(q) || product.description.toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
 }
@@ -166,7 +164,7 @@ function renderCategories() {
   categories.forEach((category) => {
     const btn = document.createElement("button");
     btn.textContent = category;
-    btn.className = selectedCategory === category ? "active" : "";
+    btn.className = `chip ${selectedCategory === category ? "active" : ""}`;
     btn.onclick = () => {
       selectedCategory = category;
       renderAll();
@@ -185,26 +183,26 @@ function renderProducts() {
     const wished = wishlist.includes(product.id);
 
     card.innerHTML = `
-      <div class="product-media">
-        <div class="badge">${product.badge}</div>
-        <button class="wishlist-btn">${wished ? "♥" : "♡"}</button>
+      <div class="product-card-top product-media">
+        <div class="product-label badge">${product.badge}</div>
+        <button class="icon-btn wishlist-btn">${wished ? "♥" : "♡"}</button>
         <div class="product-visual">
           <div>
-            <span>MF</span>
-            <div class="mock-sub">${product.category}</div>
+            <div class="mark">MF</div>
+            <div class="sub mock-sub">${product.category}</div>
           </div>
         </div>
       </div>
-      <div class="product-body">
-        <div class="product-meta">
+      <div class="product-card-body product-body">
+        <div class="product-meta" style="display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font-size:12px;color:rgba(255,255,255,.6)">
           <span>${product.category}</span>
           <span>${product.rating.toFixed(1)} (${product.reviews})</span>
         </div>
-        <div class="product-title-row">
+        <div class="product-title-row" style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
           <h4>${product.name}</h4>
-          <div class="price-box">
-            <strong>${formatPrice(product.price)}</strong>
-            <span>${formatPrice(product.oldPrice)}</span>
+          <div class="price-box" style="text-align:right;">
+            <strong class="price">${formatPrice(product.price)}</strong>
+            <div class="old-price">${formatPrice(product.oldPrice)}</div>
           </div>
         </div>
         <p class="product-desc-sm">${product.description}</p>
@@ -215,11 +213,9 @@ function renderProducts() {
       </div>
     `;
 
-    const [wishBtn, detailsBtn, saveBtn] = [
-      card.querySelector(".wishlist-btn"),
-      card.querySelector(".btn-light"),
-      card.querySelector(".btn-dark")
-    ];
+    const wishBtn = card.querySelector(".wishlist-btn");
+    const detailsBtn = card.querySelector(".btn-light");
+    const saveBtn = card.querySelector(".btn-dark");
 
     wishBtn.onclick = () => toggleWishlist(product.id);
     saveBtn.onclick = () => toggleWishlist(product.id);
@@ -236,7 +232,7 @@ function renderProducts() {
   });
 
   if (!list.length) {
-    els.productsGrid.innerHTML = '<div class="empty-state">Няма намерени продукти.</div>';
+    els.productsGrid.innerHTML = '<div class="notice">Няма намерени продукти.</div>';
   }
 }
 
@@ -250,12 +246,11 @@ function renderActiveProduct() {
   els.selectedColorText.textContent = selectedColor;
 
   const sizes = isShoe(activeProduct) ? shoeSizes : clothingSizes;
-
   els.sizeOptions.innerHTML = "";
   sizes.forEach((size) => {
     const btn = document.createElement("button");
     btn.textContent = size;
-    btn.className = selectedSize === size ? "active" : "";
+    btn.className = `option-btn chip ${selectedSize === size ? "active" : ""}`;
     btn.onclick = () => {
       selectedSize = size;
       renderActiveProduct();
@@ -267,7 +262,7 @@ function renderActiveProduct() {
   colors.forEach((color) => {
     const btn = document.createElement("button");
     btn.textContent = color;
-    btn.className = selectedColor === color ? "active" : "";
+    btn.className = `option-btn chip ${selectedColor === color ? "active" : ""}`;
     btn.onclick = () => {
       selectedColor = color;
       renderActiveProduct();
@@ -277,75 +272,51 @@ function renderActiveProduct() {
 }
 
 function toggleWishlist(productId) {
-  if (wishlist.includes(productId)) {
-    wishlist = wishlist.filter((id) => id !== productId);
-  } else {
-    wishlist.push(productId);
-  }
+  if (wishlist.includes(productId)) wishlist = wishlist.filter((id) => id !== productId);
+  else wishlist.push(productId);
   renderAll();
 }
 
 function addToCart() {
-  const existing = cart.find(
-    (item) =>
-      item.productId === activeProduct.id &&
-      item.size === selectedSize &&
-      item.color === selectedColor
-  );
-
-  if (existing) {
-    existing.qty += quantity;
-  } else {
-    cart.push({
-      productId: activeProduct.id,
-      name: activeProduct.name,
-      price: activeProduct.price,
-      qty: quantity,
-      size: selectedSize,
-      color: selectedColor
-    });
-  }
-
+  const existing = cart.find((item) => item.productId === activeProduct.id && item.size === selectedSize && item.color === selectedColor);
+  if (existing) existing.qty += quantity;
+  else cart.push({ productId: activeProduct.id, name: activeProduct.name, price: activeProduct.price, qty: quantity, size: selectedSize, color: selectedColor });
   renderCart();
   updateCounts();
 }
 
 function renderCart() {
   els.cartList.innerHTML = "";
-
   if (!cart.length) {
-    els.cartList.innerHTML = '<div class="empty-state">Количката е празна.</div>';
+    els.cartList.innerHTML = '<div class="notice">Количката е празна.</div>';
   }
 
   cart.forEach((item) => {
     const div = document.createElement("div");
-    div.className = "cart-item";
+    div.className = "order-item cart-item";
     div.innerHTML = `
-      <div class="cart-top">
+      <div class="cart-top" style="display:flex;justify-content:space-between;gap:16px;align-items:start;">
         <div>
           <div><strong>${item.name}</strong></div>
-          <div class="cart-sub">Размер: ${item.size} · Цвят: ${item.color}</div>
+          <div class="cart-sub small">Размер: ${item.size} · Цвят: ${item.color}</div>
         </div>
         <div><strong>${formatPrice(item.price * item.qty)}</strong></div>
       </div>
-      <div class="cart-controls">
-        <button>-</button>
+      <div class="cart-controls" style="display:flex;gap:10px;align-items:center;margin-top:12px;">
+        <button class="icon-btn">-</button>
         <span>${item.qty}</span>
-        <button>+</button>
+        <button class="icon-btn">+</button>
       </div>
     `;
-
-    const [minusBtn, plusBtn] = div.querySelectorAll("button");
-    minusBtn.onclick = () => updateCartQty(item.productId, item.size, item.color, -1);
-    plusBtn.onclick = () => updateCartQty(item.productId, item.size, item.color, 1);
-
+    const buttons = div.querySelectorAll("button");
+    buttons[0].onclick = () => updateCartQty(item.productId, item.size, item.color, -1);
+    buttons[1].onclick = () => updateCartQty(item.productId, item.size, item.color, 1);
     els.cartList.appendChild(div);
   });
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const shipping = cart.length ? 10 : 0;
   const total = subtotal + shipping;
-
   els.subtotal.textContent = formatPrice(subtotal);
   els.shipping.textContent = formatPrice(shipping);
   els.total.textContent = formatPrice(total);
@@ -353,13 +324,8 @@ function renderCart() {
 
 function updateCartQty(productId, size, color, delta) {
   cart = cart
-    .map((item) =>
-      item.productId === productId && item.size === size && item.color === color
-        ? { ...item, qty: Math.max(0, item.qty + delta) }
-        : item
-    )
+    .map((item) => item.productId === productId && item.size === size && item.color === color ? { ...item, qty: Math.max(0, item.qty + delta) } : item)
     .filter((item) => item.qty > 0);
-
   renderCart();
   updateCounts();
 }
@@ -369,12 +335,10 @@ function placeOrder() {
   const phone = els.phoneInput.value.trim();
   const address = els.addressInput.value.trim();
   const city = els.cityInput.value.trim();
-
   if (!name || !phone || !address || !city) {
     alert("Попълни име, телефон, адрес и град.");
     return;
   }
-
   if (!cart.length) {
     alert("Количката е празна.");
     return;
@@ -382,7 +346,6 @@ function placeOrder() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + 10;
   const orderId = `COD-${Date.now()}`;
-
   els.successBox.classList.remove("hidden");
   els.successBox.innerHTML = `
     <strong>Поръчката е приета</strong>
@@ -397,7 +360,6 @@ function placeOrder() {
   cart = [];
   renderCart();
   updateCounts();
-
   els.nameInput.value = "";
   els.phoneInput.value = "";
   els.emailInput.value = "";
@@ -420,17 +382,8 @@ els.searchInput.addEventListener("input", (e) => {
   renderProducts();
   updateCounts();
 });
-
-els.qtyMinus.onclick = () => {
-  quantity = Math.max(1, quantity - 1);
-  renderActiveProduct();
-};
-
-els.qtyPlus.onclick = () => {
-  quantity += 1;
-  renderActiveProduct();
-};
-
+els.qtyMinus.onclick = () => { quantity = Math.max(1, quantity - 1); renderActiveProduct(); };
+els.qtyPlus.onclick = () => { quantity += 1; renderActiveProduct(); };
 els.addToCartBtn.onclick = addToCart;
 els.orderBtn.onclick = placeOrder;
 
