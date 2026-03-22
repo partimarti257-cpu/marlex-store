@@ -85,15 +85,6 @@ const shoeSizes = ["40", "41", "42", "43", "44"];
 const colors = ["Черно", "Бяло", "Сиво"];
 
 let selectedCategory = "Всички";
-
-function eur(price) {
-  return (price / 1.95583).toFixed(2);
-}
-
-function formatPrice(price) {
-  return `${price} € / лв ${eur(price)}`;
-}
-
 let searchQuery = "";
 let activeProduct = products[1];
 let selectedSize = "42";
@@ -104,6 +95,14 @@ let cart = [
   { productId: 2, name: "MF Street Sneakers", price: 189, qty: 1, size: "42", color: "Черно" },
   { productId: 1, name: "MF Core Tee", price: 79, qty: 1, size: "L", color: "Бяло" }
 ];
+
+function toEur(price) {
+  return price / 1.95583;
+}
+
+function formatPrice(price) {
+  return `€${toEur(price).toFixed(2)} / ${price} лв`;
+}
 
 const els = {
   categoryBar: document.getElementById("categoryBar"),
@@ -144,7 +143,9 @@ function filteredProducts() {
   return products.filter((product) => {
     const matchesCategory = selectedCategory === "Всички" || product.category === selectedCategory;
     const q = searchQuery.toLowerCase();
-    const matchesSearch = product.name.toLowerCase().includes(q) || product.description.toLowerCase().includes(q);
+    const matchesSearch =
+      product.name.toLowerCase().includes(q) ||
+      product.description.toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
 }
@@ -182,17 +183,29 @@ function renderProducts() {
     const card = document.createElement("article");
     card.className = "product-card";
     const wished = wishlist.includes(product.id);
+
     card.innerHTML = `
       <div class="product-media">
         <div class="badge">${product.badge}</div>
         <button class="wishlist-btn">${wished ? "♥" : "♡"}</button>
-        <div class="product-visual"><div><span>MF</span><div class="mock-sub">${product.category}</div></div></div>
+        <div class="product-visual">
+          <div>
+            <span>MF</span>
+            <div class="mock-sub">${product.category}</div>
+          </div>
+        </div>
       </div>
       <div class="product-body">
-        <div class="product-meta"><span>${product.category}</span><span>${product.rating.toFixed(1)} (${product.reviews})</span></div>
+        <div class="product-meta">
+          <span>${product.category}</span>
+          <span>${product.rating.toFixed(1)} (${product.reviews})</span>
+        </div>
         <div class="product-title-row">
           <h4>${product.name}</h4>
-          <div class="price-box"><strong>${formatPrice(product.price)}</strong><span>${product.oldPrice} лв</span></div>
+          <div class="price-box">
+            <strong>${formatPrice(product.price)}</strong>
+            <span>${formatPrice(product.oldPrice)}</span>
+          </div>
         </div>
         <p class="product-desc-sm">${product.description}</p>
         <div class="product-actions">
@@ -237,6 +250,7 @@ function renderActiveProduct() {
   els.selectedColorText.textContent = selectedColor;
 
   const sizes = isShoe(activeProduct) ? shoeSizes : clothingSizes;
+
   els.sizeOptions.innerHTML = "";
   sizes.forEach((size) => {
     const btn = document.createElement("button");
@@ -263,28 +277,42 @@ function renderActiveProduct() {
 }
 
 function toggleWishlist(productId) {
-  if (wishlist.includes(productId)) wishlist = wishlist.filter((id) => id !== productId);
-  else wishlist.push(productId);
+  if (wishlist.includes(productId)) {
+    wishlist = wishlist.filter((id) => id !== productId);
+  } else {
+    wishlist.push(productId);
+  }
   renderAll();
 }
 
 function addToCart() {
-  const existing = cart.find((item) => item.productId === activeProduct.id && item.size === selectedSize && item.color === selectedColor);
-  if (existing) existing.qty += quantity;
-  else cart.push({
-    productId: activeProduct.id,
-    name: activeProduct.name,
-    price: activeProduct.price,
-    qty: quantity,
-    size: selectedSize,
-    color: selectedColor
-  });
+  const existing = cart.find(
+    (item) =>
+      item.productId === activeProduct.id &&
+      item.size === selectedSize &&
+      item.color === selectedColor
+  );
+
+  if (existing) {
+    existing.qty += quantity;
+  } else {
+    cart.push({
+      productId: activeProduct.id,
+      name: activeProduct.name,
+      price: activeProduct.price,
+      qty: quantity,
+      size: selectedSize,
+      color: selectedColor
+    });
+  }
+
   renderCart();
   updateCounts();
 }
 
 function renderCart() {
   els.cartList.innerHTML = "";
+
   if (!cart.length) {
     els.cartList.innerHTML = '<div class="empty-state">Количката е празна.</div>';
   }
@@ -306,26 +334,32 @@ function renderCart() {
         <button>+</button>
       </div>
     `;
+
     const [minusBtn, plusBtn] = div.querySelectorAll("button");
     minusBtn.onclick = () => updateCartQty(item.productId, item.size, item.color, -1);
     plusBtn.onclick = () => updateCartQty(item.productId, item.size, item.color, 1);
+
     els.cartList.appendChild(div);
   });
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const shipping = cart.length ? 10 : 0;
   const total = subtotal + shipping;
-  els.subtotal.textContent = `${subtotal} лв`;
-  els.shipping.textContent = `${shipping} лв`;
-  els.total.textContent = `${total} лв`;
+
+  els.subtotal.textContent = formatPrice(subtotal);
+  els.shipping.textContent = formatPrice(shipping);
+  els.total.textContent = formatPrice(total);
 }
 
 function updateCartQty(productId, size, color, delta) {
   cart = cart
-    .map((item) => item.productId === productId && item.size === size && item.color === color
-      ? { ...item, qty: Math.max(0, item.qty + delta) }
-      : item)
+    .map((item) =>
+      item.productId === productId && item.size === size && item.color === color
+        ? { ...item, qty: Math.max(0, item.qty + delta) }
+        : item
+    )
     .filter((item) => item.qty > 0);
+
   renderCart();
   updateCounts();
 }
@@ -335,10 +369,12 @@ function placeOrder() {
   const phone = els.phoneInput.value.trim();
   const address = els.addressInput.value.trim();
   const city = els.cityInput.value.trim();
+
   if (!name || !phone || !address || !city) {
     alert("Попълни име, телефон, адрес и град.");
     return;
   }
+
   if (!cart.length) {
     alert("Количката е празна.");
     return;
@@ -346,15 +382,22 @@ function placeOrder() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + 10;
   const orderId = `COD-${Date.now()}`;
+
   els.successBox.classList.remove("hidden");
   els.successBox.innerHTML = `
     <strong>Поръчката е приета</strong>
-    <p style="margin-top:8px;color:rgba(255,255,255,.62)">Номер: ${orderId}<br>Метод: Наложен платеж<br>Общо: ${formatPrice(total)}<br>Ще се свържем с вас за потвърждение.</p>
+    <p style="margin-top:8px;color:rgba(255,255,255,.62)">
+      Номер: ${orderId}<br>
+      Метод: Наложен платеж<br>
+      Общо: ${formatPrice(total)}<br>
+      Ще се свържем с вас за потвърждение.
+    </p>
   `;
 
   cart = [];
   renderCart();
   updateCounts();
+
   els.nameInput.value = "";
   els.phoneInput.value = "";
   els.emailInput.value = "";
@@ -377,8 +420,17 @@ els.searchInput.addEventListener("input", (e) => {
   renderProducts();
   updateCounts();
 });
-els.qtyMinus.onclick = () => { quantity = Math.max(1, quantity - 1); renderActiveProduct(); };
-els.qtyPlus.onclick = () => { quantity += 1; renderActiveProduct(); };
+
+els.qtyMinus.onclick = () => {
+  quantity = Math.max(1, quantity - 1);
+  renderActiveProduct();
+};
+
+els.qtyPlus.onclick = () => {
+  quantity += 1;
+  renderActiveProduct();
+};
+
 els.addToCartBtn.onclick = addToCart;
 els.orderBtn.onclick = placeOrder;
 
