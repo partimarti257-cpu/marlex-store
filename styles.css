@@ -126,3 +126,13 @@ p { margin: 0; color: var(--muted); }
 .hidden { display:none; }
 @media (max-width:1100px){ .hero-grid,.shop-layout,.product-section-grid,.product-layout,.newsletter-row{grid-template-columns:1fr;} .products-grid,.banner-grid,.cards-3,.footer-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:780px){ .nav-links{display:none;} .stats,.products-grid,.banner-grid,.cards-3,.footer-grid,.grid-2,.two-cols,.thumb-grid,.thumbs{grid-template-columns:1fr;} .inline-form,.hero-actions,.product-actions{flex-direction:column;} .section{padding:64px 0;} .product-grid{grid-template-columns:1fr !important;} }
+.hero-logo {
+  width: 140px;
+  margin: 0 auto 10px;
+  filter: brightness(1.2) drop-shadow(0 0 25px rgba(124, 58, 237, 0.4));
+  transition: 0.3s;
+}
+
+.hero-logo:hover {
+  transform: scale(1.05);
+}
