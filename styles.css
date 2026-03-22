@@ -13,7 +13,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  color: #FFFF;
 }
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
