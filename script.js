@@ -91,7 +91,7 @@ function eur(price) {
 }
 
 function formatPrice(price) {
-  return `${price} лв / €${eur(price)}`;
+  return `${price} € / лв ${eur(price)}`;
 }
 
 let searchQuery = "";
