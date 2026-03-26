@@ -1,19 +1,19 @@
 const products = [
   {
-    id: 1,
-    slug: "mf-core-tee",
-    name: "MF Core Tee",
-    category: "Тениски",
-    price: 79,
-    oldPrice: 95,
-    badge: "New",
-    rating: 4.8,
-    reviews: 84,
-    description: "Oversized тениска с минималистичен MF знак и premium streetwear силует.",
-    longDescription: "Тежък памук, clean силует и комфортен fit за ежедневен premium look. Създадена да стои добре както самостоятелно, така и в layered styling.",
-    colors: ["Черно", "Бяло", "Сиво"],
-    stock: 12
-  },
+    {
+  id: 1,
+  name: "Marlex Limitless Tee",
+  price: 15,
+  image: "images/tee-front.png",
+  images: [
+    "images/tee-front.png",
+    "images/tee-back.png"
+  ],
+  category: "tshirt",
+  colors: ["Black"],
+  sizes: ["S", "M", "L", "XL"],
+  description: "LIMITLESS тениска с bold X дизайн и MARLEX.MX branding. Premium памук, удобна кройка и streetwear визия."
+}
   {
     id: 2,
     slug: "mf-street-sneakers",
