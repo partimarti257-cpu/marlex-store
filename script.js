@@ -1,3 +1,4 @@
+
 const products = [
   {
     {
@@ -107,7 +108,7 @@ let selectedFilterSize = "Всички";
 let selectedFilterColor = "Всички";
 let selectedMaxPrice = 189;
 let searchQuery = "";
-let activeProduct = products[1];
+let activeProduct = products[0];
 let selectedSize = "42";
 let selectedColor = "Черно";
 let quantity = 1;
