@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marlex Fashion</title>
+  <meta name="description" content="Marlex Fashion - premium streetwear online store with cash on delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header class="header">
+      <div class="container nav">
+        <a href="#home" class="brand">
+          <span class="brand-mark">MF</span>
+          <span class="brand-name">Marlex Fashion</span>
+        </a>
+
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Отвори меню">☰</button>
+
+        <nav class="desktop-nav">
+          <a href="#home">Начало</a>
+          <a href="#shop">Магазин</a>
+          <a href="#product">Продукт</a>
+          <a href="#checkout">Поръчка</a>
+          <a href="#contact">Контакт</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="icon-btn" id="wishlistOpenBtn" aria-label="Wishlist">♡ <span id="wishlistCount">0</span></button>
+          <button class="icon-btn" id="cartOpenBtn" aria-label="Количка">🛒 <span id="cartCount">0</span></button>
+        </div>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Начало</a>
+        <a href="#shop">Магазин</a>
+        <a href="#product">Продукт</a>
+        <a href="#checkout">Поръчка</a>
+        <a href="#contact">Контакт</a>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero section">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Premium Streetwear / E-commerce</p>
+            <h1 class="hero-title">MARLEX <span>STORE</span></h1>
+            <p class="hero-copy">
+              Завършен storefront за цялостен fashion бранд — продукти, количка, наложен платеж,
+              wishlist и силна premium визуална идентичност.
+            </p>
+            <div class="hero-actions">
+              <a href="#shop" class="btn btn-primary">Пазарувай сега</a>
+              <a href="#product" class="btn btn-secondary">Виж продукта</a>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card"><strong>24h</strong><span>Доставка</span></div>
+              <div class="stat-card"><strong>30</strong><span>Дни връщане</span></div>
+              <div class="stat-card"><strong>100%</strong><span>Brand Identity</span></div>
+            </div>
+          </div>
+
+          <div class="hero-cards">
+            <div class="visual-card big-visual">
+              <div class="product-visual"><span>MF</span><small>Sneaker Hero</small></div>
+            </div>
+            <div class="stacked-cards">
+              <div class="info-card">
+                <p class="card-label">Featured</p>
+                <h3>MF Street Sneakers</h3>
+                <p>Готов storefront с premium feeling и по-завършен e-commerce flow.</p>
+              </div>
+              <div class="info-card">
+                <p class="card-label">Brand Mood</p>
+                <div class="tag-row">
+                  <span>Minimal</span><span>Bold</span><span>Street</span><span>Premium</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container campaign-grid" id="campaignGrid"></div>
+      </section>
+
+      <section id="shop" class="section">
+        <div class="container">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">Онлайн магазин</p>
+              <h2 class="section-title">Пазарувай по категории</h2>
+              <p class="section-copy">Търсене, категории, wishlist и продуктови карти. Готово за качване и използване.</p>
+            </div>
+            <div class="search-box">
+              <input type="text" id="searchInput" placeholder="Търси продукт" />
+            </div>
+          </div>
+
+          <div class="category-row" id="categoryRow"></div>
+
+          <div class="shop-layout">
+            <aside class="filters-card">
+              <div class="filters-header">
+                <h3>Филтри</h3>
+                <span>⚙</span>
+              </div>
+              <div class="filter-group">
+                <p>Размер</p>
+                <div class="chip-grid" id="sizeFilter"></div>
+              </div>
+              <div class="filter-group">
+                <p>Цвят</p>
+                <div class="chip-grid" id="colorFilter"></div>
+              </div>
+              <div class="filter-stats">
+                <div><span>Налични продукти</span><strong id="availableProducts">0</strong></div>
+                <div><span>Wishlist</span><strong id="wishlistStat">0</strong></div>
+                <div><span>В количка</span><strong id="cartStat">0</strong></div>
+              </div>
+            </aside>
+
+            <div class="product-grid" id="productGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="product" class="section compact-top">
+        <div class="container product-detail-layout">
+          <div class="detail-main card">
+            <div class="detail-header">
+              <div>
+                <p class="eyebrow">Featured Product</p>
+                <h2 class="section-title small" id="activeProductName">MF Street Sneakers</h2>
+                <div class="rating-line" id="activeProductRating"></div>
+              </div>
+              <div class="price-pill" id="activeProductPrice">189 лв</div>
+            </div>
+
+            <div class="detail-grid">
+              <div>
+                <div class="detail-visual">
+                  <div class="product-visual"><span>MF</span><small>Hero Product Mockup</small></div>
+                </div>
+                <div class="thumb-grid">
+                  <div>Front</div>
+                  <div>Side</div>
+                  <div>Back</div>
+                  <div>Detail</div>
+                </div>
+              </div>
+
+              <div>
+                <p class="detail-copy" id="activeProductDescription"></p>
+
+                <div class="option-group">
+                  <p>Размер</p>
+                  <div class="option-row" id="sizeOptions"></div>
+                </div>
+
+                <div class="option-group">
+                  <p>Цвят</p>
+                  <div class="option-row" id="colorOptions"></div>
+                </div>
+
+                <div class="add-row">
+                  <div class="qty-box">
+                    <button id="qtyMinus">−</button>
+                    <span id="qtyValue">1</span>
+                    <button id="qtyPlus">+</button>
+                  </div>
+                  <button class="btn btn-primary full" id="addToCartBtn">Добави в количката</button>
+                </div>
+
+                <div class="note-card">
+                  <div class="note-head">
+                    <span>Подробности за продукта</span>
+                    <span>›</span>
+                  </div>
+                  <p id="activeProductLongDescription"></p>
+                </div>
+
+                <div class="benefits">
+                  <div>✓ Premium quality materials</div>
+                  <div>✓ Доставка до 24-48 часа</div>
+                  <div>✓ Лесно връщане до 30 дни</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="detail-side">
+            <div class="card cart-card">
+              <p class="eyebrow">Количка</p>
+              <h3>Твоите продукти</h3>
+              <div id="cartItems"></div>
+              <div class="totals">
+                <div><span>Междинна сума</span><strong id="subtotalValue">0 лв</strong></div>
+                <div><span>Доставка</span><strong id="shippingValue">0 лв</strong></div>
+                <div class="total-final"><span>Общо</span><strong id="totalValue">0 лв</strong></div>
+              </div>
+              <a href="#checkout" class="btn btn-primary full">Към поръчка</a>
+            </div>
+
+            <div id="wishlistPanel" class="card wishlist-card">
+              <p class="eyebrow">Wishlist</p>
+              <h3>Запазени продукти</h3>
+              <div id="wishlistItems"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="checkout" class="section compact-top">
+        <div class="container checkout-layout">
+          <div class="card checkout-card">
+            <p class="eyebrow">Checkout</p>
+            <h2 class="section-title small">Наложен платеж</h2>
+            <p class="section-copy">Плащате при получаване на пратката. Ще се свържем с вас за потвърждение на поръчката.</p>
+
+            <form id="checkoutForm" class="checkout-form">
+              <div class="input-grid two">
+                <input name="name" placeholder="Име и фамилия" required />
+                <input name="phone" placeholder="Телефон" required />
+              </div>
+              <input name="email" placeholder="Имейл адрес (по желание)" />
+              <input name="address" placeholder="Адрес за доставка" required />
+              <div class="input-grid two">
+                <input name="city" placeholder="Град" required />
+                <input name="zip" placeholder="Пощ. код" />
+              </div>
+              <textarea name="notes" placeholder="Бележка към поръчката (по желание)"></textarea>
+
+              <div class="cod-box">
+                <strong>Метод на плащане: Наложен платеж</strong>
+                <p>Плащате в брой или с карта при получаване на пратката от куриера.</p>
+              </div>
+
+              <button type="submit" class="btn btn-primary full">Поръчай с наложен платеж</button>
+            </form>
+
+            <div id="checkoutSuccess" class="success-box hidden">
+              <strong>✓ Поръчката е приета</strong>
+              <p>Поръчката е записана локално в текущата версия на сайта. За реален магазин следва да я вържеш към база данни.</p>
+            </div>
+          </div>
+
+          <div class="card last-order-card">
+            <p class="eyebrow">Последна поръчка</p>
+            <h3>Получена поръчка с наложен платеж</h3>
+            <div id="lastOrderBox" class="order-empty">Все още няма записана поръчка.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container feature-grid">
+          <div class="card feature-card"><h3>Бърза доставка</h3><p>Ясно представяне на доставка, срокове и наличности за по-високо доверие.</p></div>
+          <div class="card feature-card"><h3>Наложен платеж</h3><p>Подходящ flow за България с потвърждение по телефон.</p></div>
+          <div class="card feature-card"><h3>Лесно връщане</h3><p>Професионална визия за бранд, който иска да продава уверено още от старта.</p></div>
+        </div>
+      </section>
+
+      <section class="section compact-top">
+        <div class="container">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">Social Proof</p>
+              <h2 class="section-title">Как изглежда доверие към бранда</h2>
+              <p class="section-copy">Секция с ревюта и по-професионално позициониране на магазина.</p>
+            </div>
+          </div>
+          <div class="testimonial-grid" id="testimonialGrid"></div>
+        </div>
+      </section>
+
+      <section class="section compact-top">
+        <div class="container">
+          <div class="newsletter card">
+            <div>
+              <p class="eyebrow">Newsletter / Community</p>
+              <h2 class="section-title small">Влез в следващия MF drop</h2>
+              <p class="section-copy">Събирай имейли за бъдещи колекции, лимитирани пускания и ранни поръчки.</p>
+            </div>
+            <form class="newsletter-form" id="newsletterForm">
+              <input type="email" id="newsletterEmail" placeholder="Твоят имейл" required />
+              <button class="btn btn-primary">Запиши ме</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact" class="footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand-mark large">MF</div>
+          <p class="muted">Marlex Fashion</p>
+          <div class="socials">
+            <span>Instagram</span>
+            <span>Facebook</span>
+            <span>Email</span>
+          </div>
+        </div>
+        <div>
+          <h4>Магазин</h4>
+          <p>Тениски</p>
+          <p>Обувки</p>
+          <p>Худита</p>
+          <p>Аксесоари</p>
+        </div>
+        <div>
+          <h4>Инфо</h4>
+          <p>Доставка</p>
+          <p>Връщане</p>
+          <p>Размери</p>
+          <p>Политика</p>
+        </div>
+        <div>
+          <h4>Контакт</h4>
+          <p>hello@marlexfashion.com</p>
+          <p>@marlexfashion</p>
+          <p>Sofia, Bulgaria</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
