@@ -4,7 +4,7 @@ const products = [
     slug: "marlex-tee",
     name: "Marlex Tee",
     category: "Тениски",
-    price: 29,34,
+    price: 29.34,
     oldPrice: 39,
     badge: "Drop 01",
     rating: 5.0,
