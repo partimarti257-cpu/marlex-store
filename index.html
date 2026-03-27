@@ -27,7 +27,7 @@
         <a href="#contact">Контакт</a>
       </nav>
 
-      <button class="icon-btn cart-button" id="cartCountButton">
+      <button class="icon-btn cart-button" id="cartCountButton" type="button">
         Количка <span id="cartCount">0</span>
       </button>
     </div>
@@ -41,13 +41,13 @@
           <h1 class="title-xl">MARLEX <span>STORE</span></h1>
           <p class="hero-text">Първи drop: Marlex Tee — clean streetwear тениска в черно с размери S, M, L и XL.</p>
           <div class="hero-actions">
-            <a class="btn btn-light" href="https://delivery.econt.com/buy/bvclm" target="_blank">Поръчай Marlex Tee</a>
-            <a class="btn btn-dark" href="https://delivery.econt.com/buy/bvclm" target="_blank">Виж тениската</a>
+            <a class="btn btn-light" href="#product">Поръчай Marlex Tee</a>
+            <a class="btn btn-dark" href="#shop">Виж магазина</a>
           </div>
           <div class="stats hero-stats">
             <div class="stat-card"><strong>24–72ч</strong><span>Доставка</span></div>
-            <div class="stat-card"><strong>30</strong><span>Дни връщане</span></div>
-            <div class="stat-card"><strong>100%</strong><span>Brand Identity</span></div>
+            <div class="stat-card"><strong>14 дни</strong><span>Връщане</span></div>
+            <div class="stat-card"><strong>COD</strong><span>Наложен платеж</span></div>
           </div>
         </div>
 
@@ -55,7 +55,7 @@
           <div class="glass-card hero-card mock-card big-card">
             <div class="product-visual product-hero-mock">
               <div>
-           <img src="logo.png" class="hero-logo" alt="Marlex Logo">
+                <img src="logo.png" class="hero-logo" alt="Marlex Logo">
                 <div class="sub mock-sub">Marlex Tee</div>
               </div>
             </div>
@@ -78,6 +78,15 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="container trust-strip-grid">
+        <div class="trust-pill">🚚 Доставка за 1–3 работни дни</div>
+        <div class="trust-pill">💵 Наложен платеж</div>
+        <div class="trust-pill">↩️ Връщане до 14 дни</div>
+        <div class="trust-pill">📩 Отговор до 24 часа</div>
       </div>
     </section>
 
@@ -137,9 +146,9 @@
             <div>
               <div class="eyebrow">Featured Product</div>
               <h2 class="title-lg" id="activeName">Marlex Tee</h2>
-              <div class="rating-line small"><span id="activeRating">4.9</span> · <span id="activeReviews">124</span> ревюта</div>
+              <div class="rating-line small"><span id="activeRating">5.0</span> · <span id="activeReviews">8</span> ревюта</div>
             </div>
-            <div class="pill-price" id="activePrice">€96.63 / 189 лв</div>
+            <div class="pill-price" id="activePrice">€15.00 / 29.34 лв</div>
           </div>
 
           <div class="product-grid" style="display:grid;grid-template-columns:1fr .95fr;gap:22px;margin-top:24px;">
@@ -147,10 +156,7 @@
               <div class="product-hero-mock product-visual image-stage" id="activeImageStage">
                 <img id="activeMainImage" src="01ca5580-cdf8-4b60-a76c-24fb9c27b7ed.png" alt="Marlex Tee" class="product-main-image">
               </div>
-              <div class="thumb-grid thumbs" id="activeThumbs">
-                <button class="thumb thumb-btn active" type="button" data-image="01ca5580-cdf8-4b60-a76c-24fb9c27b7ed.png">Front</button>
-                <button class="thumb thumb-btn" type="button" data-image="5f3a1e45-5669-4421-b30d-b306df771054.png">Back</button>
-              </div>
+              <div class="thumb-grid thumbs" id="activeThumbs"></div>
             </div>
 
             <div>
@@ -167,21 +173,22 @@
 
               <div class="add-row" style="display:flex;gap:14px;align-items:center;margin-top:20px;flex-wrap:wrap;">
                 <div class="qty-box qty-control">
-                  <button id="qtyMinus">-</button>
+                  <button id="qtyMinus" type="button">-</button>
                   <span id="qtyValue">1</span>
-                  <button id="qtyPlus">+</button>
+                  <button id="qtyPlus" type="button">+</button>
                 </div>
-                <button class="btn btn-light full" id="addToCartBtn">Добави в количката</button>
+                <button class="btn btn-light full" id="addToCartBtn" type="button">Добави в количката</button>
               </div>
 
               <div class="detail-box notice" style="margin-top:20px;">
                 Marlex Tee с clean front, bold back print и premium streetwear усещане. Избран цвят: <span id="selectedColorText">Черно</span>.
               </div>
 
-              <div class="benefits list-stack" style="margin-top:18px;">
-                <div>✔ Premium quality materials</div>
+              <div class="benefits list-stack product-trust" style="margin-top:18px;">
+                <div>✔ Реален продукт и наличности</div>
                 <div>✔ Доставка до 24–72 часа</div>
-                <div>✔ Лесно връщане до 30 дни</div>
+                <div>✔ Връщане до 14 дни</div>
+                <div>✔ Плащане с наложен платеж</div>
               </div>
             </div>
           </div>
@@ -214,8 +221,9 @@
                 <input class="input" id="zipInput" placeholder="Пощ. код" />
               </div>
               <div class="cod-box notice">Метод на плащане: <strong>Наложен платеж</strong></div>
+              <p class="checkout-trust">Данните ти се използват само за обработка на поръчката. Ще получиш потвърждение по телефон.</p>
               <textarea class="textarea" id="notesInput" placeholder="Бележка към поръчката (по желание)"></textarea>
-              <button class="btn btn-light full" id="orderBtn">Поръчай Marlex Tee</button>
+              <button class="btn btn-light full" id="orderBtn" type="button">Поръчай Marlex Tee</button>
             </div>
             <div id="successBox" class="success-box hidden" style="margin-top:16px;"></div>
           </div>
@@ -227,18 +235,18 @@
       <div class="container cards-3">
         <div class="account-card trust-card"><h3 class="title-md">Бърза доставка</h3><p>Ясно представяне на доставка, срокове и наличности.</p></div>
         <div class="account-card trust-card"><h3 class="title-md">Наложен платеж</h3><p>Плащане при получаване и потвърждение по телефон.</p></div>
-        <div class="account-card trust-card"><h3 class="title-md">Лесно връщане</h3><p>Професионална визия за бранд, който иска да продава уверено.</p></div>
+        <div class="account-card trust-card"><h3 class="title-md">Лесно връщане</h3><p>14 дни срок за връщане при запазено състояние на продукта.</p></div>
       </div>
     </section>
 
     <section class="section testimonials">
       <div class="container">
         <div class="eyebrow">Social Proof</div>
-        <h2 class="title-lg">Как изглежда доверие към бранда</h2>
+        <h2 class="title-lg">Защо MARLEX вдъхва доверие</h2>
         <div class="testimonial-grid cards-3" style="margin-top:32px;">
-          <div class="testimonial-card quote-card"><p>“Сайтът изглежда като истински premium бранд.”</p><strong>Alex M.</strong></div>
-          <div class="testimonial-card quote-card"><p>“MF sneakers са най-силният hero продукт.”</p><strong>Daniel P.</strong></div>
-          <div class="testimonial-card quote-card"><p>“Черно-бялата идентичност прави бранда разпознаваем.”</p><strong>Viktoria S.</strong></div>
+          <div class="testimonial-card quote-card"><p>“Premium визия, която изглежда като истински streetwear бранд.”</p><strong>Brand Look</strong></div>
+          <div class="testimonial-card quote-card"><p>“Ясна поръчка, наложен платеж и бърза доставка — точно както трябва.”</p><strong>Checkout Flow</strong></div>
+          <div class="testimonial-card quote-card"><p>“Реални снимки, размери и контакт — това продава.”</p><strong>Trust Layer</strong></div>
         </div>
       </div>
     </section>
@@ -253,63 +261,74 @@
           </div>
           <div class="inline-form newsletter-form">
             <input class="input" placeholder="Твоят имейл" />
-            <button class="btn btn-light">Запиши ме</button>
+            <button class="btn btn-light" type="button">Запиши ме</button>
           </div>
         </div>
       </div>
     </section>
   </main>
 
- <footer style="padding:40px; background:#000; color:white;">
-  <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:40px;">
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <h4>MARLEX</h4>
+        <p>Clean streetwear бранд с фокус върху premium визия, реален продукт и ясен checkout.</p>
+      </div>
 
-    <div>
-      <h3>МАГАЗИН</h3>
-      <ul style="list-style:none; padding:0;">
-        <li>Тениски</li>
-        <li>Обувки</li>
-        <li>Худита</li>
-        <li>Аксесоари</li>
-      </ul>
+      <div>
+        <h4>Магазин</h4>
+        <p><a href="#shop">Тениски</a></p>
+        <p><a href="#shop">Обувки</a></p>
+        <p><a href="#shop">Худита</a></p>
+        <p><a href="#shop">Аксесоари</a></p>
+      </div>
+
+      <div>
+        <h4>Инфо</h4>
+        <p><a href="#delivery">Доставка</a></p>
+        <p><a href="#returns">Връщане</a></p>
+        <p><a href="#sizes">Размери</a></p>
+        <p><a href="#policy">Политика</a></p>
+      </div>
+
+      <div>
+        <h4>Контакт</h4>
+        <p>hello@marlexfashion.com</p>
+        <p>@marlexfashion</p>
+        <p>Stara Zagora, Bulgaria</p>
+        <p>Отговор до 24 часа</p>
+      </div>
     </div>
+  </footer>
 
-    <div>
-      <h3>ИНФО</h3>
-      <ul style="list-style:none; padding:0;">
-        <li><a href="#delivery">Доставка</a></li>
-        <li><a href="#returns">Връщане</a></li>
-        <li><a href="#sizes">Размери</a></li>
-        <li><a href="#policy">Политика</a></li>
-      </ul>
+  <section id="delivery" class="info-section">
+    <div class="container info-section-card">
+      <h2>Доставка</h2>
+      <p>Доставка за 1–3 работни дни с Еконт или Спиди. Поръчките се обработват до 24 часа.</p>
     </div>
+  </section>
 
-    <div>
-      <h3>КОНТАКТ</h3>
-      <p>hello@marlexfashion.com</p>
-      <p>@marlexfashion</p>
-      <p>Stara Zagora, Bulgaria</p>
+  <section id="returns" class="info-section alt">
+    <div class="container info-section-card">
+      <h2>Връщане</h2>
+      <p>Можеш да върнеш продукта до 14 дни след получаване. Продуктът трябва да е в оригинално състояние.</p>
     </div>
+  </section>
 
-  </div>
-</footer>
- <section id="delivery" style="padding:60px; background:#111; color:white;">
-  <h2>Доставка</h2>
-  <p>Доставка за 1–3 работни дни с Еконт или Спиди. Поръчките се обработват до 24 часа.</p>
-</section>
+  <section id="sizes" class="info-section">
+    <div class="container info-section-card">
+      <h2>Размери</h2>
+      <p>S / M / L / XL — стандартна кройка. Ако се колебаеш, избери по-голям размер.</p>
+    </div>
+  </section>
 
-<section id="returns" style="padding:60px; background:#000; color:white;">
-  <h2>Връщане</h2>
-  <p>Можеш да върнеш продукта до 14 дни след получаване. Продуктът трябва да е в оригинално състояние.</p>
-</section>
+  <section id="policy" class="info-section alt">
+    <div class="container info-section-card">
+      <h2>Политика</h2>
+      <p>Личните ти данни са защитени и не се споделят с трети страни. Използват се само за обработка на поръчки.</p>
+    </div>
+  </section>
 
-<section id="sizes" style="padding:60px; background:#111; color:white;">
-  <h2>Размери</h2>
-  <p>S / M / L / XL — стандартна кройка. Ако се колебаеш, избери по-голям размер.</p>
-</section>
-
-<section id="policy" style="padding:60px; background:#000; color:white;">
-  <h2>Политика</h2>
-  <p>Личните ти данни са защитени и не се споделят с трети страни. Използват се само за обработка на поръчки.</p>
-</section>
+  <script src="script.js"></script>
 </body>
 </html>
