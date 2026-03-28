@@ -4,39 +4,47 @@ const products = [
     slug: "marlex-tee",
     name: "Marlex Tee",
     category: "Тениски",
-    price: 29.34,
-    oldPrice: 39,
+    price: 15,
+    oldPrice: 20,
     badge: "Drop 01",
     rating: 5.0,
     reviews: 8,
     description: "Първата тениска на Marlex с clean front, bold гръб и premium streetwear визия.",
-    longDescription: "Marlex Tee е първият drop на бранда — черна тениска с чист front дизайн, силен back print и удобен fit за ежедневен streetwear стил.",
+    longDescription:
+      "Marlex Tee е първият drop на бранда — черна тениска с clean front дизайн, силен back print и удобен fit за ежедневен streetwear стил.",
     colors: ["Черно"],
     sizes: ["S", "M", "L", "XL"],
-    images: ["01ca5580-cdf8-4b60-a76c-24fb9c27b7ed.png", "5f3a1e45-5669-4421-b30d-b306df771054.png"]
+    images: [
+      "01ca5580-cdf8-4b60-a76c-24fb9c27b7ed.png",
+      "5f3a1e45-5669-4421-b30d-b306df771054.png"
+    ]
   },
   {
-  id: 2,
-  slug: "marlex-black-hoodie",
-  name: "Marlex Black Hoodie",
-  category: "Худита",
-  price: 25,
-  oldPrice: 50,
-  badge: "Drop 02",
-  rating: 4.8,
-  reviews: 4,
-  description: "Черно худи с premium streetwear визия.",
-  longDescription: "Плътно худи с удобна кройка, минимален front branding и силно присъствие.",
-  colors: ["Бяло"],
-  sizes: ["S", "M", "L", "XL"],
-  images: ["39a73b9d-1001-490d-9205-d19525f2f4c6.png", "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"]
-}
+    id: 2,
+    slug: "marlex-hoodie",
+    name: "Marlex Hoodie",
+    category: "Худита",
+    price: 35,
+    oldPrice: 45,
+    badge: "New",
+    rating: 4.9,
+    reviews: 4,
+    description: "Плътно худи с clean визия и streetwear fit.",
+    longDescription:
+      "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
+    colors: ["Черно"],
+    sizes: ["S", "M", "L", "XL"],
+    images: [
+      "39a73b9d-1001-490d-9205-d19525f2f4c6.png",
+      "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"
+    ]
+  }
 ];
 
-const categories = ["Всички", "Тениски", "Обувки", "Худита", "Аксесоари"];
+const categories = ["Всички", "Тениски", "Худита"];
 const clothingSizes = ["S", "M", "L", "XL"];
-const shoeSizes = ["40", "41", "42", "43", "44"];
 const fallbackColors = ["Черно", "Бяло", "Сиво"];
+const EUR_TO_BGN = 1.95583;
 
 let selectedCategory = "Всички";
 let searchQuery = "";
@@ -45,9 +53,10 @@ let selectedSize = "M";
 let selectedColor = "Черно";
 let quantity = 1;
 
-const storedWishlist = JSON.parse(localStorage.getItem("marlexWishlist") || "[1,2]");
+const storedWishlist = JSON.parse(localStorage.getItem("marlexWishlist") || "[]");
 const storedCart = JSON.parse(localStorage.getItem("marlexCart") || "[]");
-let wishlist = Array.isArray(storedWishlist) ? storedWishlist : [1, 2];
+
+let wishlist = Array.isArray(storedWishlist) ? storedWishlist : [];
 let cart = Array.isArray(storedCart) ? storedCart : [];
 
 function saveState() {
@@ -56,17 +65,12 @@ function saveState() {
 }
 
 function toBgn(price) {
-  return price * 1.95583;
-}
+  return Number(price) * EUR_TO_BGN;
 }
 
 function formatPrice(price) {
-  return `€${price.toFixed(2)} / ${toBgn(price).toFixed(2)} лв`;
-}
-}
-
-function isShoe(product) {
-  return product.category === "Обувки";
+  const eur = Number(price) || 0;
+  return `€${eur.toFixed(2)} / ${toBgn(eur).toFixed(2)} лв`;
 }
 
 function getEls() {
@@ -111,38 +115,56 @@ function getEls() {
 
 function filteredProducts() {
   return products.filter((product) => {
-    const matchesCategory = selectedCategory === "Всички" || product.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "Всички" || product.category === selectedCategory;
+
     const q = searchQuery.trim().toLowerCase();
     const haystack = `${product.name} ${product.description} ${product.category}`.toLowerCase();
+
     return matchesCategory && haystack.includes(q);
   });
 }
 
 function updateCounts(els) {
-  els.productCount.textContent = String(filteredProducts().length);
-  els.wishlistCount.textContent = String(wishlist.length);
-  els.cartItemCount.textContent = String(cart.reduce((sum, item) => sum + item.qty, 0));
-  els.cartCount.textContent = String(cart.reduce((sum, item) => sum + item.qty, 0));
+  if (els.productCount) {
+    els.productCount.textContent = String(filteredProducts().length);
+  }
+  if (els.wishlistCount) {
+    els.wishlistCount.textContent = String(wishlist.length);
+  }
+  if (els.cartItemCount) {
+    els.cartItemCount.textContent = String(cart.reduce((sum, item) => sum + item.qty, 0));
+  }
+  if (els.cartCount) {
+    els.cartCount.textContent = String(cart.reduce((sum, item) => sum + item.qty, 0));
+  }
 }
 
 function renderCategories(els) {
+  if (!els.categoryBar) return;
+
   els.categoryBar.innerHTML = "";
+
   categories.forEach((category) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = category;
     btn.className = `chip ${selectedCategory === category ? "active" : ""}`;
+
     btn.addEventListener("click", () => {
       selectedCategory = category;
-      renderProducts(els);
       renderCategories(els);
+      renderProducts(els);
       updateCounts(els);
     });
+
     els.categoryBar.appendChild(btn);
   });
 }
 
 function renderProducts(els) {
+  if (!els.productsGrid) return;
+
   const list = filteredProducts();
   els.productsGrid.innerHTML = "";
 
@@ -154,22 +176,31 @@ function renderProducts(els) {
   list.forEach((product) => {
     const card = document.createElement("article");
     card.className = "product-card";
+
     const wished = wishlist.includes(product.id);
-    const primaryImage = product.images?.[0];
+    const primaryImage = product.images && product.images.length ? product.images[0] : null;
 
     card.innerHTML = `
       <div class="product-card-top product-media">
         <div class="product-label badge">${product.badge}</div>
-        <button class="icon-btn wishlist-btn" type="button" aria-label="Запази">${wished ? "♥" : "♡"}</button>
+        <button class="icon-btn wishlist-btn" type="button" aria-label="Запази">
+          ${wished ? "♥" : "♡"}
+        </button>
         <div class="product-visual product-card-visual">
-          ${primaryImage ? `<img src="${primaryImage}" alt="${product.name}" class="product-card-image">` : `<div><div class="mark">MF</div><div class="sub mock-sub">${product.category}</div></div>`}
+          ${
+            primaryImage
+              ? `<img src="${primaryImage}" alt="${product.name}" class="product-card-image">`
+              : `<div><div class="mark">MF</div><div class="sub mock-sub">${product.category}</div></div>`
+          }
         </div>
       </div>
+
       <div class="product-card-body product-body">
         <div class="product-meta" style="display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font-size:12px;color:rgba(255,255,255,.6)">
           <span>${product.category}</span>
           <span>${product.rating.toFixed(1)} (${product.reviews})</span>
         </div>
+
         <div class="product-title-row" style="display:flex;justify-content:space-between;gap:14px;align-items:start;">
           <h4>${product.name}</h4>
           <div class="price-box" style="text-align:right;">
@@ -177,7 +208,9 @@ function renderProducts(els) {
             <div class="old-price">${formatPrice(product.oldPrice)}</div>
           </div>
         </div>
+
         <p class="product-desc-sm">${product.description}</p>
+
         <div class="product-actions">
           <button class="btn btn-light" type="button">Детайли</button>
           <button class="btn btn-dark" type="button">${wished ? "Saved" : "Save"}</button>
@@ -185,18 +218,22 @@ function renderProducts(els) {
       </div>
     `;
 
+    const wishBtn = card.querySelector(".wishlist-btn");
     const actionButtons = card.querySelectorAll(".product-actions .btn");
     const detailsBtn = actionButtons[0];
     const saveBtn = actionButtons[1];
-    const wishBtn = card.querySelector(".wishlist-btn");
 
     const openDetails = () => {
       activeProduct = product;
-      selectedSize = (product.sizes?.[0]) || (isShoe(product) ? "42" : "M");
-      selectedColor = (product.colors?.[0]) || "Черно";
+      selectedSize = (product.sizes && product.sizes[0]) || "M";
+      selectedColor = (product.colors && product.colors[0]) || "Черно";
       quantity = 1;
       renderActiveProduct(els);
-      document.getElementById("product").scrollIntoView({ behavior: "smooth", block: "start" });
+
+      const productSection = document.getElementById("product");
+      if (productSection) {
+        productSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     };
 
     detailsBtn.addEventListener("click", openDetails);
@@ -208,39 +245,50 @@ function renderProducts(els) {
 }
 
 function renderActiveProduct(els) {
+  if (!els.activeName) return;
+
   els.activeName.textContent = activeProduct.name;
   els.activePrice.textContent = formatPrice(activeProduct.price);
   els.activeRating.textContent = activeProduct.rating.toFixed(1);
   els.activeReviews.textContent = String(activeProduct.reviews);
-  els.activeDescription.textContent = activeProduct.longDescription;
+  els.activeDescription.textContent = activeProduct.longDescription || activeProduct.description;
   els.qtyValue.textContent = String(quantity);
-  els.selectedColorText.textContent = selectedColor;
 
-  const sizes = activeProduct.sizes || (isShoe(activeProduct) ? shoeSizes : clothingSizes);
+  if (els.selectedColorText) {
+    els.selectedColorText.textContent = selectedColor;
+  }
+
+  const sizes = activeProduct.sizes || clothingSizes;
   els.sizeOptions.innerHTML = "";
+
   sizes.forEach((size) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = size;
     btn.className = `option-btn chip ${selectedSize === size ? "active" : ""}`;
+
     btn.addEventListener("click", () => {
       selectedSize = size;
       renderActiveProduct(els);
     });
+
     els.sizeOptions.appendChild(btn);
   });
 
-  const activeColors = activeProduct.colors || fallbackColors;
+  const colors = activeProduct.colors || fallbackColors;
   els.colorOptions.innerHTML = "";
-  activeColors.forEach((color) => {
+
+  colors.forEach((color) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = color;
     btn.className = `option-btn chip ${selectedColor === color ? "active" : ""}`;
+
     btn.addEventListener("click", () => {
       selectedColor = color;
       renderActiveProduct(els);
     });
+
     els.colorOptions.appendChild(btn);
   });
 
@@ -250,27 +298,29 @@ function renderActiveProduct(els) {
 function renderProductImages(els) {
   if (!els.activeMainImage || !els.activeThumbs) return;
 
-  if (!activeProduct.images || !activeProduct.images.length) {
-    els.activeThumbs.innerHTML = "";
-    return;
-  }
-
-  els.activeMainImage.src = activeProduct.images[0];
-  els.activeMainImage.alt = activeProduct.name;
+  const images = activeProduct.images || [];
   els.activeThumbs.innerHTML = "";
 
-  activeProduct.images.forEach((image, index) => {
+  if (!images.length) return;
+
+  els.activeMainImage.src = images[0];
+  els.activeMainImage.alt = activeProduct.name;
+
+  images.forEach((image, index) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = `thumb thumb-btn ${index === 0 ? "active" : ""}`;
     btn.textContent = index === 0 ? "Front" : index === 1 ? "Back" : `View ${index + 1}`;
-    btn.dataset.image = image;
+
     btn.addEventListener("click", () => {
       els.activeMainImage.src = image;
       els.activeMainImage.alt = activeProduct.name;
-      [...els.activeThumbs.querySelectorAll(".thumb-btn")].forEach((item) => item.classList.remove("active"));
+
+      const allThumbs = els.activeThumbs.querySelectorAll(".thumb-btn");
+      allThumbs.forEach((item) => item.classList.remove("active"));
       btn.classList.add("active");
     });
+
     els.activeThumbs.appendChild(btn);
   });
 }
@@ -281,6 +331,7 @@ function toggleWishlist(productId, els) {
   } else {
     wishlist.push(productId);
   }
+
   saveState();
   renderProducts(els);
   updateCounts(els);
@@ -288,7 +339,10 @@ function toggleWishlist(productId, els) {
 
 function addToCart(els) {
   const existing = cart.find(
-    (item) => item.productId === activeProduct.id && item.size === selectedSize && item.color === selectedColor
+    (item) =>
+      item.productId === activeProduct.id &&
+      item.size === selectedSize &&
+      item.color === selectedColor
   );
 
   if (existing) {
@@ -310,6 +364,8 @@ function addToCart(els) {
 }
 
 function renderCart(els) {
+  if (!els.cartList) return;
+
   els.cartList.innerHTML = "";
 
   if (!cart.length) {
@@ -318,6 +374,7 @@ function renderCart(els) {
     cart.forEach((item) => {
       const div = document.createElement("div");
       div.className = "order-item cart-item";
+
       div.innerHTML = `
         <div class="cart-top" style="display:flex;justify-content:space-between;gap:16px;align-items:start;">
           <div>
@@ -326,6 +383,7 @@ function renderCart(els) {
           </div>
           <div><strong>${formatPrice(item.price * item.qty)}</strong></div>
         </div>
+
         <div class="cart-controls" style="display:flex;gap:10px;align-items:center;margin-top:12px;">
           <button class="icon-btn" type="button">-</button>
           <span>${item.qty}</span>
@@ -333,16 +391,24 @@ function renderCart(els) {
           <button class="icon-btn remove-btn" type="button">✕</button>
         </div>
       `;
+
       const buttons = div.querySelectorAll("button");
-      buttons[0].addEventListener("click", () => updateCartQty(item.productId, item.size, item.color, -1, els));
-      buttons[1].addEventListener("click", () => updateCartQty(item.productId, item.size, item.color, 1, els));
-      buttons[2].addEventListener("click", () => removeFromCart(item.productId, item.size, item.color, els));
+      buttons[0].addEventListener("click", () =>
+        updateCartQty(item.productId, item.size, item.color, -1, els)
+      );
+      buttons[1].addEventListener("click", () =>
+        updateCartQty(item.productId, item.size, item.color, 1, els)
+      );
+      buttons[2].addEventListener("click", () =>
+        removeFromCart(item.productId, item.size, item.color, els)
+      );
+
       els.cartList.appendChild(div);
     });
   }
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const shipping = cart.length ? 10 : 0;
+  const shipping = cart.length ? 5 : 0;
   const total = subtotal + shipping;
 
   els.subtotal.textContent = formatPrice(subtotal);
@@ -352,11 +418,16 @@ function renderCart(els) {
 
 function updateCartQty(productId, size, color, delta, els) {
   cart = cart
-    .map((item) =>
-      item.productId === productId && item.size === size && item.color === color
-        ? { ...item, qty: Math.max(0, item.qty + delta) }
-        : item
-    )
+    .map((item) => {
+      if (
+        item.productId === productId &&
+        item.size === size &&
+        item.color === color
+      ) {
+        return { ...item, qty: Math.max(0, item.qty + delta) };
+      }
+      return item;
+    })
     .filter((item) => item.qty > 0);
 
   saveState();
@@ -365,7 +436,15 @@ function updateCartQty(productId, size, color, delta, els) {
 }
 
 function removeFromCart(productId, size, color, els) {
-  cart = cart.filter((item) => !(item.productId === productId && item.size === size && item.color === color));
+  cart = cart.filter(
+    (item) =>
+      !(
+        item.productId === productId &&
+        item.size === size &&
+        item.color === color
+      )
+  );
+
   saveState();
   renderCart(els);
   updateCounts(els);
@@ -387,7 +466,7 @@ function placeOrder(els) {
     return;
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + 10;
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + 5;
   const orderId = `COD-${Date.now()}`;
 
   els.successBox.classList.remove("hidden");
@@ -413,33 +492,54 @@ function placeOrder(els) {
   els.cityInput.value = "";
   els.zipInput.value = "";
   els.notesInput.value = "";
-  document.getElementById("checkout").scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const checkout = document.getElementById("checkout");
+  if (checkout) {
+    checkout.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function init() {
   const els = getEls();
 
-  els.searchInput.addEventListener("input", (e) => {
-    searchQuery = e.target.value;
-    renderProducts(els);
-    updateCounts(els);
-  });
+  if (els.searchInput) {
+    els.searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      renderProducts(els);
+      updateCounts(els);
+    });
+  }
 
-  els.qtyMinus.addEventListener("click", () => {
-    quantity = Math.max(1, quantity - 1);
-    renderActiveProduct(els);
-  });
+  if (els.qtyMinus) {
+    els.qtyMinus.addEventListener("click", () => {
+      quantity = Math.max(1, quantity - 1);
+      renderActiveProduct(els);
+    });
+  }
 
-  els.qtyPlus.addEventListener("click", () => {
-    quantity += 1;
-    renderActiveProduct(els);
-  });
+  if (els.qtyPlus) {
+    els.qtyPlus.addEventListener("click", () => {
+      quantity += 1;
+      renderActiveProduct(els);
+    });
+  }
 
-  els.addToCartBtn.addEventListener("click", () => addToCart(els));
-  els.orderBtn.addEventListener("click", () => placeOrder(els));
-  els.cartCountButton.addEventListener("click", () => {
-    document.getElementById("checkout").scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  if (els.addToCartBtn) {
+    els.addToCartBtn.addEventListener("click", () => addToCart(els));
+  }
+
+  if (els.orderBtn) {
+    els.orderBtn.addEventListener("click", () => placeOrder(els));
+  }
+
+  if (els.cartCountButton) {
+    els.cartCountButton.addEventListener("click", () => {
+      const checkout = document.getElementById("checkout");
+      if (checkout) {
+        checkout.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
 
   renderCategories(els);
   renderProducts(els);
