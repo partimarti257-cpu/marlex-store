@@ -33,13 +33,15 @@ const products = [
     slug: "mf-signature-hoodie",
     name: "MF Signature Hoodie",
     category: "Худита",
-    price: 129,
-    oldPrice: 149,
+    price: 48.77,
+    oldPrice: 97.55,
     badge: "Limited",
     rating: 4.7,
     reviews: 53,
     description: "Плътно худи с clean front branding и streetwear fit.",
     longDescription: "Premium плътност, soft interior и минималистичен фронтален знак за бранд усещане без излишен шум."
+    sizes: ["S", "M", "L", "XL"]
+    images: ["39a73b9d-1001-490d-9205-d19525f2f4c6.png", "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"]
   },
   {
     id: 4,
