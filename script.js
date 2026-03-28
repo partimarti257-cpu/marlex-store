@@ -55,8 +55,9 @@ function saveState() {
   localStorage.setItem("marlexCart", JSON.stringify(cart));
 }
 
-function toEur(price) {
-  return price / 1.95583;
+function toBgn(price) {
+  return price * 1.95583;
+}
 }
 
 function formatPrice(price) {
