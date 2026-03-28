@@ -38,6 +38,26 @@ const products = [
       "39a73b9d-1001-490d-9205-d19525f2f4c6.png",
       "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"
     ]
+  },
+   {
+    id: 3,
+    slug: "marlex-hoodie",
+    name: "Marlex Hoodie",
+    category: "Худита",
+    price: 25,
+    oldPrice: 50,
+    badge: "New",
+    rating: 4.9,
+    reviews: 4,
+    description: "Плътно худи с clean визия и streetwear fit.",
+    longDescription:
+      "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
+    colors: ["Бяло"],
+    sizes: ["S", "M", "L", "XL"],
+    images: [
+      "162a4dee-b137-4f1b-a78a-79383799a5c8.png",
+      "98b51e07-a957-4c22-bd47-0c9f0e0c84e1.png"
+    ]
   }
 ];
 
