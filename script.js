@@ -16,70 +16,21 @@ const products = [
     images: ["01ca5580-cdf8-4b60-a76c-24fb9c27b7ed.png", "5f3a1e45-5669-4421-b30d-b306df771054.png"]
   },
   {
-    id: 2,
-    slug: "mf-street-sneakers",
-    name: "MF Street Sneakers",
-    category: "Обувки",
-    price: 189,
-    oldPrice: 229,
-    badge: "Best Seller",
-    rating: 4.9,
-    reviews: 124,
-    description: "Масивни sneakers с premium monochrome визия и силно градско присъствие.",
-    longDescription: "Комбинация от комфорт, стабилност и разпознаваем силует. Подходящ модел за hero продукт на бранда с ясно streetwear позициониране."
-  },
-  {
-    id: 3,
-    slug: "mf-signature-hoodie",
-    name: "MF Signature Hoodie",
-    category: "Худита",
-    price: 48.77,
-    oldPrice: 97.55,
-    badge: "Limited",
-    rating: 4.7,
-    reviews: 53,
-    description: "Плътно худи с clean front branding и streetwear fit.",
-    longDescription: "Premium плътност, soft interior и минималистичен фронтален знак за бранд усещане без излишен шум."
-  },
-  {
-    id: 4,
-    slug: "mf-essential-cap",
-    name: "MF Essential Cap",
-    category: "Аксесоари",
-    price: 49,
-    oldPrice: 59,
-    badge: "Logo",
-    rating: 4.6,
-    reviews: 41,
-    description: "Шапка с изчистен силует за завършен MF стил.",
-    longDescription: "Лек, удобен аксесоар за завършен monochrome outfit с дискретна, но силна бранд идентичност."
-  },
-  {
-    id: 5,
-    slug: "mf-motion-hoodie",
-    name: "MF Motion Hoodie",
-    category: "Худита",
-    price: 139,
-    oldPrice: 159,
-    badge: "Drop 01",
-    rating: 4.8,
-    reviews: 38,
-    description: "Heavyweight худи за premium усещане и standout визия.",
-    longDescription: "Изградено за хладни дни, тежка материя и по-структуриран fit за по-луксозно streetwear присъствие."
-  },
-  {
-    id: 6,
-    slug: "mf-mono-tee",
-    name: "MF Mono Tee",
-    category: "Тениски",
-    price: 69,
-    oldPrice: 89,
-    badge: "Core",
-    rating: 4.5,
-    reviews: 29,
-    description: "Базова тениска за ежедневен premium look.",
-    longDescription: "Чист front, ясен fit и лесно комбиниране с denim, cargo или layered outerwear."
-  }
+  id: 2,
+  slug: "marlex-black-hoodie",
+  name: "Marlex Black Hoodie",
+  category: "Худита",
+  price: 48.77,
+  oldPrice: 97.55,
+  badge: "Drop 02",
+  rating: 4.8,
+  reviews: 4,
+  description: "Черно худи с premium streetwear визия.",
+  longDescription: "Плътно худи с удобна кройка, минимален front branding и силно присъствие.",
+  colors: ["Бяло"],
+  sizes: ["S", "M", "L", "XL"],
+  images: ["39a73b9d-1001-490d-9205-d19525f2f4c6.png", "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"]
+}
 ];
 
 const categories = ["Всички", "Тениски", "Обувки", "Худита", "Аксесоари"];
