@@ -541,7 +541,6 @@ function placeOrder(els) {
     alert("Грешка при изпращане");
   });
 }
-}
 
 function init() {
   const els = getEls();
