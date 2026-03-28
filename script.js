@@ -28,7 +28,7 @@ const products = [
     oldPrice: 50,
     badge: "New",
     rating: 4.9,
-    reviews: 4,
+    reviews: 6,
     description: "Плътно худи с clean визия и streetwear fit.",
     longDescription:
       "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
