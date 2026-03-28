@@ -61,7 +61,8 @@ function toBgn(price) {
 }
 
 function formatPrice(price) {
-  return `€${toEur(price).toFixed(2)} / ${Number(price).toFixed(2)} лв`;
+  return `€${price.toFixed(2)} / ${toBgn(price).toFixed(2)} лв`;
+}
 }
 
 function isShoe(product) {
