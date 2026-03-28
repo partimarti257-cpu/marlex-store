@@ -5,7 +5,7 @@ const products = [
     name: "Marlex Tee",
     category: "Тениски",
     price: 15,
-    oldPrice: 25,
+    oldPrice: 20,
     badge: "Drop 01",
     rating: 5.0,
     reviews: 8,
@@ -32,14 +32,14 @@ const products = [
     description: "Плътно худи с clean визия и streetwear fit.",
     longDescription:
       "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
-    colors: ["Бяло"],
+    colors: ["Черно"],
     sizes: ["S", "M", "L", "XL"],
     images: [
-      "39a73b9d-1001-490d-9205-d19525f2f4c6.png",
-      "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"
+      "162a4dee-b137-4f1b-a78a-79383799a5c8.png",
+      "98b51e07-a957-4c22-bd47-0c9f0e0c84e1.png"
     ]
   },
-   {
+  {
     id: 3,
     slug: "marlex-hoodie",
     name: "Marlex Hoodie",
@@ -52,13 +52,13 @@ const products = [
     description: "Плътно худи с clean визия и streetwear fit.",
     longDescription:
       "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
-    colors: ["Черно"],
+    colors: ["Бяло"],
     sizes: ["S", "M", "L", "XL"],
     images: [
-      "162a4dee-b137-4f1b-a78a-79383799a5c8.png",
-      "98b51e07-a957-4c22-bd47-0c9f0e0c84e1.png"
+      "39a73b9d-1001-490d-9205-d19525f2f4c6.png",
+      "ba3849d3-c1fa-47ea-9a77-05bb76b984df.png"
     ]
-  }
+  },
 ];
 
 const categories = ["Всички", "Тениски", "Худита"];
@@ -475,48 +475,62 @@ function placeOrder(els) {
   const phone = els.phoneInput.value.trim();
   const address = els.addressInput.value.trim();
   const city = els.cityInput.value.trim();
+  const email = els.emailInput ? els.emailInput.value.trim() : "";
 
   if (!name || !phone || !address || !city) {
-    alert("Попълни име, телефон, адрес и град.");
+    alert("Попълни всички полета");
     return;
   }
 
   if (!cart.length) {
-    alert("Количката е празна.");
+    alert("Количката е празна");
     return;
   }
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0) + 5;
-  const orderId = `COD-${Date.now()}`;
 
-  els.successBox.classList.remove("hidden");
-  els.successBox.innerHTML = `
-    <strong>Поръчката е приета</strong>
-    <p style="margin-top:8px;color:rgba(255,255,255,.62)">
-      Номер: ${orderId}<br>
-      Метод: Наложен платеж<br>
-      Общо: ${formatPrice(total)}<br>
-      Ще се свържем с вас за потвърждение.
-    </p>
-  `;
+  const items = cart
+    .map((item) => `${item.name} (${item.size}) x${item.qty}`)
+    .join(", ");
 
-  cart = [];
-  saveState();
-  renderCart(els);
-  updateCounts(els);
+  emailjs.send("service_pn0fohf", "template_0bxn7gb", {
+    customer_name: name,
+    customer_phone: phone,
+    customer_address: address,
+    customer_city: city,
+    customer_email: email || "няма имейл",
+    order_items: items,
+    order_total_eur: total.toFixed(2)
+  }).then(() => {
+    if (els.successBox) {
+      els.successBox.classList.remove("hidden");
+      els.successBox.innerHTML = `
+        <strong>Поръчката е изпратена успешно!</strong>
+        <p style="margin-top:8px;color:rgba(255,255,255,.62)">
+          Общо: ${formatPrice(total)}<br>
+          Ще се свържем с клиента за потвърждение.
+        </p>
+      `;
+    } else {
+      alert("Поръчката е изпратена успешно!");
+    }
 
-  els.nameInput.value = "";
-  els.phoneInput.value = "";
-  els.emailInput.value = "";
-  els.addressInput.value = "";
-  els.cityInput.value = "";
-  els.zipInput.value = "";
-  els.notesInput.value = "";
+    cart = [];
+    saveState();
+    renderCart(els);
+    updateCounts(els);
 
-  const checkout = document.getElementById("checkout");
-  if (checkout) {
-    checkout.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+    if (els.nameInput) els.nameInput.value = "";
+    if (els.phoneInput) els.phoneInput.value = "";
+    if (els.emailInput) els.emailInput.value = "";
+    if (els.addressInput) els.addressInput.value = "";
+    if (els.cityInput) els.cityInput.value = "";
+    if (els.zipInput) els.zipInput.value = "";
+    if (els.notesInput) els.notesInput.value = "";
+  }).catch((error) => {
+    console.error("EmailJS error:", error);
+    alert("Грешка при изпращане");
+  });
 }
 
 function init() {
