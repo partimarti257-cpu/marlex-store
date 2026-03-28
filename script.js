@@ -502,13 +502,22 @@ function placeOrder(els) {
     order_items: items,
     order_total_eur: total.toFixed(2)
   }).then(() => {
+    if (email) {
+      return emailjs.send("service_pn0fohf", "template_k3scmh7", {
+        customer_name: name,
+        customer_email: email,
+        order_items: items,
+        order_total_eur: total.toFixed(2)
+      });
+    }
+  }).then(() => {
     if (els.successBox) {
       els.successBox.classList.remove("hidden");
       els.successBox.innerHTML = `
         <strong>Поръчката е изпратена успешно!</strong>
         <p style="margin-top:8px;color:rgba(255,255,255,.62)">
           Общо: ${formatPrice(total)}<br>
-          Ще се свържем с клиента за потвърждение.
+          ${email ? "Клиентът получи и имейл за потвърждение." : "Няма въведен имейл на клиента."}
         </p>
       `;
     } else {
@@ -531,6 +540,7 @@ function placeOrder(els) {
     console.error("EmailJS error:", error);
     alert("Грешка при изпращане");
   });
+}
 }
 
 function init() {
