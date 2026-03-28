@@ -52,7 +52,7 @@ const products = [
     description: "Плътно худи с clean визия и streetwear fit.",
     longDescription:
       "Marlex Hoodie е минималистично худи с premium усещане, удобна кройка и силно streetwear присъствие.",
-    colors: ["Бяло"],
+    colors: ["Черно"],
     sizes: ["S", "M", "L", "XL"],
     images: [
       "162a4dee-b137-4f1b-a78a-79383799a5c8.png",
