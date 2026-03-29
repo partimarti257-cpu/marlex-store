@@ -7,6 +7,26 @@ const products = [
     price: 15,
     oldPrice: 20,
     badge: "Drop 01",
+    rating: 4.5,
+    reviews: 10,
+    description: "Първата тениска на Marlex с clean front, bold гръб и premium streetwear визия.",
+    longDescription:
+      "Marlex Tee е първият drop на бранда — черна тениска с clean front дизайн, силен back print и удобен fit за ежедневен streetwear стил.",
+    colors: ["Черно"],
+    sizes: ["S", "M", "L", "XL"],
+    images: [
+      "81a8a64f-4da6-48b6-9016-c3d6596664b1.png",
+      "5f3a1e45-5669-4421-b30d-b306df771054.png"
+    ]
+  },
+   {
+    id: 2,
+    slug: "marlex-tee",
+    name: "Marlex Tee",
+    category: "Тениски",
+    price: 15,
+    oldPrice: 20,
+    badge: "Drop 01",
     rating: 5.0,
     reviews: 8,
     description: "Първата тениска на Marlex с clean front, bold гръб и premium streetwear визия.",
@@ -20,7 +40,7 @@ const products = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     slug: "marlex-hoodie",
     name: "Marlex Hoodie",
     category: "Худита",
@@ -40,7 +60,7 @@ const products = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     slug: "marlex-hoodie",
     name: "Marlex Hoodie",
     category: "Худита",
