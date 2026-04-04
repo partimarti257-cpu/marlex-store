@@ -886,3 +886,35 @@ textarea {
   color: #ff9a3d;
   letter-spacing: .05em;
 }
+.sticky-buy {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 420px;
+  z-index: 999;
+}
+
+.sticky-buy button {
+  width: 100%;
+  height: 52px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #6c5ce7, #00d1ff);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(108,92,231,.35);
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.sticky-buy button:hover {
+  transform: translateY(-2px);
+}
+
+.hidden {
+  display: none;
+}
