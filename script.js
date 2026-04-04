@@ -333,6 +333,12 @@ function renderActiveProduct(els) {
   });
 
   renderProductImages(els);
+  // STOCK (fake scarcity)
+const stockEl = document.getElementById("stockInfo");
+if (stockEl) {
+  const fakeStock = Math.floor(Math.random() * 5) + 3; // между 3 и 7
+  stockEl.textContent = `Остават ${fakeStock} броя`;
+}
 }
 
 function renderProductImages(els) {
