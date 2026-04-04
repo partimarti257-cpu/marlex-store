@@ -618,7 +618,15 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
-// Sticky Buy Button
+function updateStickyBuyButton() {
+  const sticky = document.getElementById("stickyBuy");
+  const stickyBtn = document.getElementById("stickyBuyBtn");
+
+  if (!sticky || !stickyBtn || !activeProduct) return;
+
+  stickyBtn.textContent = `Поръчай – €${Number(activeProduct.price).toFixed(2)}`;
+}
+
 window.addEventListener("scroll", () => {
   const sticky = document.getElementById("stickyBuy");
   const trigger = document.getElementById("addToCartBtn");
@@ -634,7 +642,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// Click = add to cart
 document.addEventListener("DOMContentLoaded", () => {
   const stickyBtn = document.getElementById("stickyBuyBtn");
   const normalBtn = document.getElementById("addToCartBtn");
@@ -644,4 +651,6 @@ document.addEventListener("DOMContentLoaded", () => {
       normalBtn.click();
     });
   }
+
+  updateStickyBuyButton();
 });
