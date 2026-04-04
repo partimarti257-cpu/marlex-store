@@ -880,3 +880,9 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+.stock-info {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #ff9a3d;
+  letter-spacing: .05em;
+}
