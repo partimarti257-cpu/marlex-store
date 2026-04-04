@@ -654,3 +654,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateStickyBuyButton();
 });
+updateStickyBuyButton();
