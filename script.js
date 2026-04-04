@@ -618,3 +618,30 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+// Sticky Buy Button
+window.addEventListener("scroll", () => {
+  const sticky = document.getElementById("stickyBuy");
+  const trigger = document.getElementById("addToCartBtn");
+
+  if (!sticky || !trigger) return;
+
+  const rect = trigger.getBoundingClientRect();
+
+  if (rect.top < 0) {
+    sticky.classList.remove("hidden");
+  } else {
+    sticky.classList.add("hidden");
+  }
+});
+
+// Click = add to cart
+document.addEventListener("DOMContentLoaded", () => {
+  const stickyBtn = document.getElementById("stickyBuyBtn");
+  const normalBtn = document.getElementById("addToCartBtn");
+
+  if (stickyBtn && normalBtn) {
+    stickyBtn.addEventListener("click", () => {
+      normalBtn.click();
+    });
+  }
+});
